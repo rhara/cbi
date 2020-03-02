@@ -9,5 +9,28 @@ def get_distance_matrix(ag1, ag2):
     D = np.sqrt(np.sum(d*d, axis=2))
     return D
 
-def get_connectivity(dmat):
-    print(dmat < 2.2)
+def get_connectivity(ag, dmat, thres=2.2):
+    conn = []
+    for i, j in zip(*np.where(dmat < thres)):
+        if i == j:
+            continue
+        if len(conn) == 0:
+            conn.append(set([i, j]))
+            continue
+        found = False
+        for k in range(len(conn)):
+            if i in conn[k] or j in conn[k]:
+                conn[k].add(i)
+                conn[k].add(j)
+                found = True
+                break
+        if not found:
+            conn.append(set([i,j]))
+    for k in range(len(conn)):
+        conn[k] = sorted(conn[k])
+    conn.sort()
+
+    atom_groups = []
+    for c in conn:
+        atom_groups.append(ag[c].toAtomGroup())
+    return atom_groups

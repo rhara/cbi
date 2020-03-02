@@ -3,7 +3,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='proobr',
-    version='0.0.1',
+    version='0.0.2',
     description='ProDy-OpenBabel-RDKit triad',
     author='Ryuichiro Hara',
     author_email='hara.ryuichiro@gmail.com',

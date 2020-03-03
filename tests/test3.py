@@ -5,4 +5,5 @@ import prody
 
 iname = sys.argv[1] #apo
 tleap = bl.TLEAP()
-tleap(sys.argv[1])
+odir = tleap(sys.argv[1])
+print(odir)

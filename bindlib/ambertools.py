@@ -1,4 +1,5 @@
 import os, uuid, gzip
+import subprocess as sp
 
 class TLEAP:
     def __init__(self):
@@ -7,7 +8,6 @@ class TLEAP:
 
     def __call__(self, pdb_iname):
         uid = uuid.uuid4().hex
-        print(uid)
         tmpdir = f'tmp/{uid}.tmpdir'
         os.makedirs(tmpdir, exist_ok=True, mode=0o755)
         template = self.template.replace('{{tmpdir}}', tmpdir)
@@ -21,6 +21,5 @@ class TLEAP:
         iname1 = f'{tmpdir}/protein.mol2'
         iname2 = f'{tmpdir}/protein_H.pdb'
         oname = f'{tmpdir}/protein_H_charged.mol2'
-        print(f'python {script} {iname1} {iname2} {oname}')
-        os.system(f'python {script} {iname1} {iname2} {oname}')
-        os.system(f'cp -av {oname} ./protein_H_charged.mol2')
+        sp.check_output(f'python {script} {iname1} {iname2} {oname}', shell=True, stderr=sp.DEVNULL)
+        return tmpdir

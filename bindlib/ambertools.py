@@ -23,3 +23,4 @@ class TLEAP:
         oname = f'{tmpdir}/protein_H_charged.mol2'
         print(f'python {script} {iname1} {iname2} {oname}')
         os.system(f'python {script} {iname1} {iname2} {oname}')
+        os.system(f'cp -av {oname} ./protein_H_charged.mol2')

@@ -1,7 +1,6 @@
 import os
 import pandas as pd
 import bindlib as bl
-import prody
 
 def get_catalog():
     df = pd.read_csv('../cbi_prep/data.csv')
@@ -21,9 +20,6 @@ def gen():
                 yield fname
 
 cat = get_catalog()
-to_smi = bl.AtomGroupConv(to='smi')
-
-thres = 5.0
 
 for fname in gen():
     pdbid = os.path.basename(fname)[:4]
@@ -56,5 +52,3 @@ for fname in gen():
         continue
 
     print(pdbid, ligand.getTitle(), ligand.numAtoms(), apo.numAtoms(), '->', chains.numAtoms(), '->', pocket.numAtoms())
-
-    # prody.writePDB(f'{pdbid}.apo.pdb.gz', chains)

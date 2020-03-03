@@ -19,3 +19,7 @@ from .atomgroup import (
     get_contact_chains,
     get_pocket_residues,
 )
+
+from .ambertools import (
+    TLEAP,
+)

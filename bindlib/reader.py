@@ -59,7 +59,10 @@ class AtomGroupPDBReader:
         self.select = select
 
     def __call__(self, iname):
-        ag = prody.parsePDB(iname)
-        if self.select:
-            ag = ag.select(self.select).toAtomGroup()
-        return ag
+        try:
+            ag = prody.parsePDB(iname)
+            if self.select:
+                ag = ag.select(self.select).toAtomGroup()
+            return ag
+        except:
+            return None

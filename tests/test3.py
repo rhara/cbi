@@ -1,4 +1,4 @@
-import os
+import os, sys
 import pandas as pd
 import bindlib as bl
 import prody
@@ -25,6 +25,9 @@ def gen():
                 done = True
 
 cat = get_catalog()
+
+tleap = bl.TLEAP()
+tleap(sys.argv[1])
 
 for fname in gen():
     pdbid = os.path.basename(fname)[:4]

@@ -1,2 +1,3 @@
 recursive-include data *
-include test.py
+recursive-include test *
+include bindlib/etc/tleaprc.template

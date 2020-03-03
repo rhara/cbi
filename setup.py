@@ -3,7 +3,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='bindlib',
-    version='0.0.8',
+    version='0.1.0',
     description='ProDy-OpenBabel-RDKit triad',
     author='Ryuichiro Hara',
     author_email='hara.ryuichiro@gmail.com',

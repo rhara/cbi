@@ -1,3 +1,6 @@
+import numpy as np
+from . import math
+
 def split_by_res(ag):
     ress = {}
     for i, atom in enumerate(ag):
@@ -22,3 +25,25 @@ def pick_ligand(ag, name):
         if ag.getTitle().split()[0] == name:
             return ag
     return None
+
+def get_contact_chains(p_ag, l_ag, thres=5.0):
+    dmat = math.get_distance_matrix(p_ag, l_ag)
+
+    idxs = set()
+    for i, j in zip(*np.where(dmat < thres)):
+        idxs.add(i)
+
+    if len(idxs) == 0:
+        return None
+
+    contact_atoms = p_ag[sorted(idxs)].toAtomGroup()
+
+    chids = set()
+    for atom in contact_atoms:
+        chid = atom.getChid()
+        chids.add(chid)
+
+    query = ' or '.join([f'chain {ch}' for ch in sorted(chids)])
+    chains = p_ag.select(query).toAtomGroup()
+
+    return chains

@@ -16,4 +16,5 @@ from .math import (
 from .atomgroup import (
     split_by_res,
     pick_ligand,
+    get_contact_chains,
 )

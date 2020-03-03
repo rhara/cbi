@@ -23,3 +23,7 @@ from .atomgroup import (
 from .ambertools import (
     TLEAP,
 )
+
+from .dock import (
+    smina_dock,
+)

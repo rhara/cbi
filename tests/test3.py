@@ -3,7 +3,11 @@ import pandas as pd
 import bindlib as bl
 import prody
 
-iname = sys.argv[1] #apo
+apo_fname = sys.argv[1] #apo
+ligand_fname = sys.argv[2]
+
 tleap = bl.TLEAP()
-odir = tleap(sys.argv[1])
-print(odir)
+workdir = tleap(apo_fname)
+protein_fname = f'{workdir}/protein_H_charged.mol2'
+bl.smina_dock(protein_fname, ligand_fname, ncpu=10, workdir=workdir)
+print(workdir)

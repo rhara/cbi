@@ -27,3 +27,7 @@ from .ambertools import (
 from .dock import (
     smina_dock,
 )
+
+from .calc_rmsd import (
+    get_rmsd,
+)

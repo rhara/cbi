@@ -209,5 +209,6 @@ CHIS = CHIE
 
 test = loadPdb {{tmpdir}}/protein.pdb
 charge test
+SavePdb test {{tmpdir}}/protein_H.pdb
 saveMol2 test {{tmpdir}}/protein.mol2 0
 quit

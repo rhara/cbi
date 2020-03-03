@@ -1,6 +1,6 @@
-import proobr.biomolecule as bio
-import proobr.smallmolecule as sm
-import proobr.math as pm
+import bindlib.biomolecule as bio
+import bindlib.smallmolecule as sm
+import bindlib.math as pm
 
 to_sdf = sm.PDBConv(to='sdf')
 to_smi = sm.PDBConv(to='smi')

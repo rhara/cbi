@@ -28,22 +28,30 @@ def pick_ligand(ag, name):
 
 def get_contact_chains(p_ag, l_ag, thres=5.0):
     dmat = math.get_distance_matrix(p_ag, l_ag)
-
-    idxs = set()
-    for i, j in zip(*np.where(dmat < thres)):
-        idxs.add(i)
-
-    if len(idxs) == 0:
-        return None
-
-    contact_atoms = p_ag[sorted(idxs)].toAtomGroup()
-
-    chids = set()
-    for atom in contact_atoms:
-        chid = atom.getChid()
-        chids.add(chid)
-
-    query = ' or '.join([f'chain {ch}' for ch in sorted(chids)])
-    chains = p_ag.select(query).toAtomGroup()
-
+    idxs = sorted(set(np.where(dmat < thres)[0]))
+    chids = set([p_ag[i].getChid() for i in idxs])
+    idxs = [i for i in range(p_ag.numAtoms()) if p_ag[i].getChid() in chids]
+    chains = p_ag[idxs].toAtomGroup()
     return chains
+
+def get_pocket_residues(p_ag, l_ag, thres=5.0):
+    dmat = math.get_distance_matrix(p_ag, l_ag)
+    idxs = sorted(set(np.where(dmat < thres)[0]))
+    ress = set()
+    for i in idxs:
+        atom = p_ag[i]
+        resname = atom.getResname()
+        resnum = atom.getResnum()
+        chid = atom.getChid()
+        ress.add((resname, resnum, chid))
+    idxs = []
+    for i in range(p_ag.numAtoms()):
+        atom = p_ag[i]
+        resname = atom.getResname()
+        resnum = atom.getResnum()
+        chid = atom.getChid()
+        if (resname, resnum, chid) in ress:
+            idxs.append(i)
+    residues = p_ag[idxs].toAtomGroup()
+    return residues
+

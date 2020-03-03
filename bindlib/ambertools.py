@@ -2,8 +2,8 @@ import os, uuid, gzip
 
 class TLEAP:
     def __init__(self):
-        bdir = os.path.dirname(__file__)
-        self.template = open(bdir + '/etc/tleaprc.template').read()
+        self.basedir = os.path.dirname(__file__)
+        self.template = open(self.basedir + '/etc/tleaprc.template').read()
 
     def __call__(self, pdb_iname):
         uid = uuid.uuid4().hex
@@ -17,4 +17,9 @@ class TLEAP:
         pdb_oname = f'{tmpdir}/protein.pdb'
         open(pdb_oname, 'wt').write(openf(pdb_iname, 'rt').read())
         os.system(f'tleap -s -f {template_fname} > /dev/null 2>&1')
-        os.system(f'obabel {tmpdir}/protein.mol2 -O {tmpdir}/protein.pdbqt 2> /dev/null')
+        script = f'{self.basedir}/etc/fix_protein_mol2.py'
+        iname1 = f'{tmpdir}/protein.mol2'
+        iname2 = f'{tmpdir}/protein_H.pdb'
+        oname = f'{tmpdir}/protein_H_charged.mol2'
+        print(f'python {script} {iname1} {iname2} {oname}')
+        os.system(f'python {script} {iname1} {iname2} {oname}')

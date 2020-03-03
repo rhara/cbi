@@ -15,6 +15,9 @@ class AtomGroupConv(openbabel.OBConversion):
     def __init__(self, to):
         openbabel.OBConversion.__init__(self)
         self.SetInAndOutFormats('pdb', to)
+        self.strip = False
+        if to == 'smi':
+            self.strip = True
 
     def read(self, ag):
         sio = io.StringIO()
@@ -25,9 +28,9 @@ class AtomGroupConv(openbabel.OBConversion):
         self.ReadString(mol, cont)
         return mol
 
-    def __call__(self, ag, strip=False):
+    def __call__(self, ag):
         mol = self.read(ag)
         ocont = self.WriteString(mol)
-        if strip:
+        if self.strip:
             ocont = ocont.rstrip()
         return ocont

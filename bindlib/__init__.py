@@ -12,3 +12,8 @@ from .math import (
     get_distance_matrix,
     get_connectivity,
 )
+
+from .atomgroup import (
+    split_by_res,
+    pick_ligand,
+)

@@ -16,4 +16,5 @@ class TLEAP:
         openf = gzip.open if pdb_iname.endswith('.pdb.gz') else open
         pdb_oname = f'{tmpdir}/protein.pdb'
         open(pdb_oname, 'wt').write(openf(pdb_iname, 'rt').read())
-        os.system(f'tleap -s -f {template_fname}')
+        os.system(f'tleap -s -f {template_fname} > /dev/null 2>&1')
+        os.system(f'obabel {tmpdir}/protein.mol2 -O {tmpdir}/protein.pdbqt 2> /dev/null')

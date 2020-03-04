@@ -16,6 +16,7 @@ setup(
             'cbi_rmsd = cbi.bin.cbi_rmsd:main',
             'cbi_dock = cbi.bin.cbi_dock:main',
             'cbi_fixprotein = cbi.bin.cbi_fixprotein:main',
+            'cbi_prep = cbi.bin.cbi_prep:main',
         ]
     }
 )

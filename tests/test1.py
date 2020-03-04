@@ -3,7 +3,7 @@ import cbi
 to_sdf = cbi.AtomGroupConv(to='sdf')
 to_smi = cbi.AtomGroupConv(to='smi')
 
-protein = cbi.AtomGroupPDBReader('not hydrogen and not water')('data/5eol.pdb.gz')
+protein = cbi.AtomGroupPDBReader('not hydrogen and not water')('example_data/5eol.pdb.gz')
 ligand_test = protein.select('hetero').toAtomGroup()
 
 ligands = cbi.split_by_res(ligand_test)

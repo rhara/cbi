@@ -1,3 +1,4 @@
 recursive-include data *
 recursive-include test *
 recursive-include cbi/etc *
+include README.md

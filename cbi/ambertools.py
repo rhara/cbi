@@ -17,9 +17,8 @@ class TLEAP:
         pdb_oname = f'{tmpdir}/protein.pdb'
         open(pdb_oname, 'wt').write(openf(pdb_iname, 'rt').read())
         os.system(f'tleap -s -f {template_fname} > /dev/null 2>&1')
-        script = f'{self.basedir}/etc/fix_protein_mol2.py'
         iname1 = f'{tmpdir}/protein.mol2'
         iname2 = f'{tmpdir}/protein_H.pdb'
         oname = f'{tmpdir}/protein_H_charged.mol2'
-        sp.check_output(f'python {script} {iname1} {iname2} {oname}', shell=True, stderr=sp.DEVNULL)
+        sp.check_output(f'cbi_fixprotein {iname1} {iname2} {oname}', shell=True, stderr=sp.DEVNULL)
         return tmpdir

@@ -14,11 +14,11 @@ def worker(args):
     protein_fname = f'{datadir}/{pdbid}/{pdbid}.apo.pdb.gz'
     ligand_fname = f'{datadir}/{pdbid}/{pdbid}_{ligname}.sdf'
     ret = dict(count=count, pdbid=pdbid, ligname=ligname)
-    if not os.path.exists(protein_fname) or not os.path.exists(ligand_name):
+    if not os.path.exists(protein_fname) or not os.path.exists(ligand_fname):
         ret['success'] = False
         return ret
     sp.call(f'cbi_dock {protein_fname} {ligand_fname} -q', shell=True)
-    output_fname = f'{datadir}/pdbid}/{pdbid}_{ligname}.sdf'
+    output_fname = f'{datadir}/{pdbid}/{pdbid}_{ligname}.sdf'
     ret['success'] = os.path.exists(output_fname)
     return ret
 

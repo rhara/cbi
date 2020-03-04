@@ -30,7 +30,7 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('iname', type=str)
     parser.add_argument('datadir', type=str)
-    parser.add_argument('--label', '-', type=str)
+    parser.add_argument('--label', '-l', type=str)
     args = parser.parse_args()
 
     datadir = os.path.abspath(args.datadir)

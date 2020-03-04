@@ -12,7 +12,9 @@ setup(
     include_package_data=True,
     packages=find_packages(exclude=('tests', 'docs')),
     entry_points={
-        "console_scripts": [
+        'console_scripts': [
+            'cbi_rmsd = cbi.bin.cbi_rmsd:main',
+            'cbi_dock = cbi.bin.cbi_dock:main',
         ]
     }
 )

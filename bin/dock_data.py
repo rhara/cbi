@@ -14,7 +14,7 @@ def worker(args):
     protein_fname = f'{datadir}/{pdbid}/{pdbid}.apo.pdb.gz'
     ligand_fname = f'{datadir}/{pdbid}/{pdbid}_{ligname}.sdf'
     ret = dict(count=count, pdbid=pdbid, ligname=ligname)
-    output_fname = f'{datadir}/{pdbid}/{pdbid}_{ligname}_docked.sdf'
+    output_fname = f'{datadir}/{pdbid}/{pdbid}_{ligname}.docked.sdf'
     if os.path.exists(output_fname):
         ret['success'] = True
         return ret

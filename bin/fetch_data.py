@@ -34,8 +34,6 @@ def main():
         count = 0
         for i in df.index:
             r = df.loc[i]
-            if not ('select' in r['label'] or '2019' in r['label']):
-                continue
             labels = r['label'].split(':')
             ok = True
             if q_labels:

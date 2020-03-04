@@ -25,7 +25,15 @@ def main():
 
     protein = cbi.AtomGroupPDBReader('not hydrogen and not water')(pdb_iname)
 
+    if protein is None:
+        print(pdbid, f'Error: reading protein')
+        sys.exit(-1)
+
     apo = protein.select('protein').toAtomGroup()
+
+    if apo is None:
+        print(pdbid, f'Error: creating apo failed')
+        sys.exit(-1)
 
     hetero = protein.select('hetero').toAtomGroup()
     if hetero is None:

@@ -3,12 +3,10 @@
 import glob
 import subprocess as sp
 
-flist = glob.glob('data/*/*.docked.sdf')
-
 ng = 0
 count = 0
 good = 0
-for f in flist:
+for f in glob.glob('data/*/*.docked.sdf'):
     pdbid = f[5:9]
     ligname = f[15:18]
     ref = f'data/{pdbid}/{pdbid}_{ligname}.pdb'

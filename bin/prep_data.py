@@ -13,7 +13,7 @@ def worker(args):
     count, pdbid, ligname = args
     protein_fname = f'{datadir}/{pdbid}/{pdbid}.apo.pdb.gz'
     ligand_fname = f'{datadir}/{pdbid}/{pdbid}_{ligname}.sdf'
-    sp.call(f'cbi_dokc {protein_fname} {ligand_fname} -q', shell=True)
+    sp.call(f'cbi_dock {protein_fname} {ligand_fname} -q', shell=True)
     return dict(count=count, pdbid=pdbid, ligname=ligname)
 
 def main():

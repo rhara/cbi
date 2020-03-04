@@ -3,7 +3,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='cbi',
-    version='0.1.4',
+    version='0.1.5',
     description='ProDy-OpenBabel-RDKit triad',
     author='Ryuichiro Hara',
     author_email='hara.ryuichiro@gmail.com',

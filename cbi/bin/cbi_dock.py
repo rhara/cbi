@@ -1,54 +1,22 @@
-import os
-import pandas as pd
+#!/usr/bin/env python
+
+import sys, os, argparse
 import cbi
 
-def get_catalog():
-    df = pd.read_csv('../cbi_prep/data.csv')
-    D = {}
-    for i in df.index:
-        r = df.loc[i]
-        pdbid = r['pdbid']
-        ligname = r['ligname']
-        D[pdbid] = ligname
-    return D
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('apo_iname', type=str)
+    parser.add_argument('mol_iname', type=str)
+    args = parser.parse_args()
 
-def gen():
-    for root, dirs, files in os.walk('../cbi_prep/data'):
-        for f in files:
-            if f.endswith('.pdb.gz') and not f.endswith('.apo.pdb.gz'):
-                fname = f'{root}/{f}'
-                yield fname
+    ref_iname = args.apo_iname
+    fit_iname = args.mol_iname
 
-cat = get_catalog()
+    tleap = cbi.TLEAP()
+    workdir = tleap(apo_iname)
+    protein_fname = f'{workdir}/protein_H_charged.mol2'
+    ncpu = max(os.cpu_count()-2, 1)
+    cbi.smina_dock(protein_fname, mol_iname, ncpu=ncpu, workdir=workdir)
 
-for fname in gen():
-    pdbid = os.path.basename(fname)[:4]
-
-    ligname = cat.get(pdbid)
-    if ligname is None:
-        print(pdbid, f'Error: no ligname entry')
-        continue
-    apo = cbi.AtomGroupPDBReader('protein and not hydrogen')(fname)
-    hetero = cbi.AtomGroupPDBReader('hetero and not hydrogen and not water')(fname)
-    if hetero is None:
-        print(pdbid, f'Error: no appropriate hetero entry in PDB')
-        continue
-
-    ligand = cbi.pick_ligand(hetero, ligname)
-
-    if ligand is None:
-        print(pdbid, f'Error: no ligand "{ligname}"')
-        continue
-
-    chains = cbi.get_contact_chains(apo, ligand)
-    if chains is None:
-        print(pdbid, f'Error: no contact with protein "{pdbid}" and {ligand.getTitle()}')
-        continue
-
-    pocket = cbi.get_pocket_residues(apo, ligand)
-
-    if pocket is None:
-        print(pdbid, f'Error: could not find pocket of {ligand.getTitle()} in "{pdbid}"')
-        continue
-
-    print(pdbid, ligand.getTitle(), ligand.numAtoms(), apo.numAtoms(), '->', chains.numAtoms(), '->', pocket.numAtoms())
+if __name__ == '__main__':
+    main()

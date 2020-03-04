@@ -1,6 +1,6 @@
 import os
 import pandas as pd
-import bindlib as bl
+import cbi
 
 def get_catalog():
     df = pd.read_csv('../cbi_prep/data.csv')
@@ -28,24 +28,24 @@ for fname in gen():
     if ligname is None:
         print(pdbid, f'Error: no ligname entry')
         continue
-    apo = bl.AtomGroupPDBReader('protein and not hydrogen')(fname)
-    hetero = bl.AtomGroupPDBReader('hetero and not hydrogen and not water')(fname)
+    apo = cbi.AtomGroupPDBReader('protein and not hydrogen')(fname)
+    hetero = cbi.AtomGroupPDBReader('hetero and not hydrogen and not water')(fname)
     if hetero is None:
         print(pdbid, f'Error: no appropriate hetero entry in PDB')
         continue
 
-    ligand = bl.pick_ligand(hetero, ligname)
+    ligand = cbi.pick_ligand(hetero, ligname)
 
     if ligand is None:
         print(pdbid, f'Error: no ligand "{ligname}"')
         continue
 
-    chains = bl.get_contact_chains(apo, ligand)
+    chains = cbi.get_contact_chains(apo, ligand)
     if chains is None:
         print(pdbid, f'Error: no contact with protein "{pdbid}" and {ligand.getTitle()}')
         continue
 
-    pocket = bl.get_pocket_residues(apo, ligand)
+    pocket = cbi.get_pocket_residues(apo, ligand)
 
     if pocket is None:
         print(pdbid, f'Error: could not find pocket of {ligand.getTitle()} in "{pdbid}"')

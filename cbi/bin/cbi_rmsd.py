@@ -12,13 +12,9 @@ def main():
     ref_iname = args.ref_iname
     fit_iname = args.fit_iname
 
-    refmol = cbi.OBMolPDBReader()(ref_iname)
-    fitmols = cbi.OBMolSDFReader()(fit_iname)
+    rmsds = cbi.get_rmsd_from_files(ref_iname, fit_iname)
 
-    count = 0
-    for fitmol in fitmols:
-        count += 1
-        rmsd = cbi.get_rmsd(refmol, fitmol)
+    for count, rmsd in enumerate(rmsds, start=1):
         print(count, rmsd)
 
 if __name__ == "__main__":

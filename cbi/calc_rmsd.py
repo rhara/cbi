@@ -1,3 +1,20 @@
+import subprocess as sp
+
+def get_rmsd_from_files(ref_pdb, fit_sdf):
+    output = sp.check_output(f'obrms -firstonly {ref_pdb} {fit_sdf}', shell=True, universal_newlines=True).rstrip()
+    rmsds = []
+    try:
+        for line in output.split('\n'):
+            it = line.split()
+            rmsd = round(float(it[1]), 3)
+            rmsds.append(rmsd)
+    except IndexError:
+        return []
+    return rmsds
+
+"""
+# This code does not work as expected
+
 import openbabel as ob
 import math
 import numpy as np
@@ -37,3 +54,4 @@ def get_rmsd(refmol, fitmol):
             rmsd = rmsd_of_mapping
     rmsd = round(rmsd, 3)
     return rmsd
+"""

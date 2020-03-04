@@ -29,5 +29,6 @@ from .dock import (
 )
 
 from .calc_rmsd import (
-    get_rmsd,
+    get_rmsd_from_files,
+    #get_rmsd,
 )

@@ -48,8 +48,8 @@ def main():
 
     pool = mp.Pool(mp.cpu_count())
     for ret in pool.imap_unordered(worker, gen()):
-        count, pdbid, ligname = ret['count'], ret['pdbid'], ret['ligname']
-        print(count, pdbid)
+        success, count, pdbid, ligname = ret['success'], ret['count'], ret['pdbid'], ret['ligname']
+        print(count, pdbid, ligname, success)
 
 if __name__ == '__main__':
     main()

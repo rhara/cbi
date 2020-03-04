@@ -20,9 +20,11 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('iname', type=str)
     parser.add_argument('datadir', type=str)
+    parser.add_argument('--label', '-', type=str)
     args = parser.parse_args()
 
     datadir = os.path.abspath(args.datadir)
+    q_labels = args.label.split(':') if args.label else None
 
     os.makedirs(datadir, mode=0o755, exist_ok=True)
 
@@ -33,6 +35,15 @@ def main():
         for i in df.index:
             r = df.loc[i]
             if not ('select' in r['label'] or '2019' in r['label']):
+                continue
+            labels = r['label'].split(':')
+            ok = True
+            if q_labels:
+                for q_label in q_labels:
+                    if not q_label in labels:
+                        ok = False
+                        break
+            if not ok:
                 continue
             count += 1
             pdbid = r['pdbid']

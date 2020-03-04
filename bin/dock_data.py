@@ -30,19 +30,29 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('iname', type=str)
     parser.add_argument('datadir', type=str)
+    parser.add_argument('--label', '-', type=str)
     args = parser.parse_args()
 
     datadir = os.path.abspath(args.datadir)
+    iname = args.iname
+    q_labels = args.label.split(':') if args.label else None
 
     os.makedirs(datadir, mode=0o755, exist_ok=True)
 
-    df = pd.read_csv(args.iname)
+    df = pd.read_csv(iname)
 
     def gen():
         count = 0
         for i in df.index:
             r = df.loc[i]
-            if not ('select' in r['label'] or '2019' in r['label']):
+            labels = r['label'].split(':')
+            ok = True
+            if q_labels:
+                for q_label in q_labels:
+                    if not q_label in labels:
+                        ok = False
+                        break
+            if not ok:
                 continue
             count += 1
             pdbid = r['pdbid']

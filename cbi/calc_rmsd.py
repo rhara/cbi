@@ -27,13 +27,13 @@ def get_rmsd(refmol, fitmol):
 
     refcoords = get_coords(refmol)
     fitcoords = get_coords(fitmol)
-    minrmsd = 1e10
+    rmsd = 1e10
     for mapping in mappings:
-        automorph_coords = [None]*len(refcoords)
+        automorph_coords = [None]*refcoords.shape[0]
         for x, y in mapping:
             automorph_coords[lookup.index(x)] = refcoords[lookup.index(y)]
-        mapping_rmsd = __vec_rmsd(fitcoords, automorph_coords)
-        if mapping_rmsd < minrmsd:
-            minrmsd = mapping_rmsd
-    minrmsd = round(minrmsd, 3)
-    return minrmsd
+        rmsd_of_mapping = __vec_rmsd(fitcoords, np.array(automorph_coords))
+        if rmsd_of_mapping < rmsd:
+            rmsd = rmsd_of_mapping
+    rmsd = round(rmsd, 3)
+    return rmsd

@@ -25,6 +25,8 @@ def main():
 
     protein = cbi.AtomGroupPDBReader('not hydrogen and not water')(pdb_iname)
 
+    apo = protein.select('protein').toAtomGroup()
+
     hetero = protein.select('hetero').toAtomGroup()
     if hetero is None:
         print(pdbid, f'Error: no HETATM entry', file=sys.stderr)
@@ -38,7 +40,7 @@ def main():
 
     print(pdbid, to_smi(ligand), ligand_name)
 
-    chains = cbi.get_contact_chains(protein, ligand)
+    chains = cbi.get_contact_chains(apo, ligand)
     if chains is None:
         print(pdbid, f'Error: no contact chains with {ligand_name}')
         sys.exit(-1)

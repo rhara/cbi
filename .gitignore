@@ -1,5 +1,6 @@
 /tmp/
 /data/
+.ipynb_checkpoints/
 *.apo.pdb.gz
 *_tmp_*
 *.log

@@ -2,6 +2,18 @@
 
 NOTE: This is going to be chained.
 
+## Requirements
+
+```
+conda install -c bioconda autodock-vina smina
+conda install -c insilichem prody
+conda install -c ambermd ambertools
+conda install -c openbabel openbabel
+```
+
+No `rdkit` required.
+
+
 ```
 pip install .
 ```

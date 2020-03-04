@@ -5,13 +5,13 @@ import openbabel as ob
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument('iname_charge', type=str)
     parser.add_argument('iname_protein_H', type=str)
+    parser.add_argument('iname_charge', type=str)
     parser.add_argument('oname', type=str)
     args = parser.parse_args()
 
-    iname_charge = args.iname_charge
     iname_protein_H = args.iname_protein_H
+    iname_charge = args.iname_charge
     oname = args.oname
 
     status = False

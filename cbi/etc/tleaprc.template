@@ -1,4 +1,4 @@
-logFile {{tmpdir}}/tleap.log
+logFile {{workdir}}/{{pdbid}}.tleap.log
 #
 # ----- leaprc for loading the ff14SB force field
 # ----- NOTE: this is designed for PDB format 3!
@@ -207,8 +207,8 @@ NHIS = NHIE
 HIS = HIE
 CHIS = CHIE
 
-test = loadPdb {{tmpdir}}/protein.pdb
+test = loadPdb {{workdir}}/{{pdbid}}_tmp_protein.pdb
 charge test
-SavePdb test {{tmpdir}}/protein_H.pdb
-saveMol2 test {{tmpdir}}/protein.mol2 0
+SavePdb test {{workdir}}/{{pdbid}}_tmp_protein_H.pdb
+saveMol2 test {{workdir}}/{{pdbid}}_tmp_protein.mol2 0
 quit

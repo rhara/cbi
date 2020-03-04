@@ -1,1 +1,9 @@
 /tmp/
+*.apo.pdb.gz
+*_tmp_*
+*.log
+*.tleaprc
+*.docked.sdf
+*.pdb
+*.sdf
+*_charged.mol2
